@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "YhGQp43zlld/qn6deZqSA2JCLArR4HyP2S3xvzdHkvQ=",
+  "Source": "TesteNetCore.API",
+  "BasePath": "_content/TesteNetCore.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
