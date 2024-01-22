@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Reflection;
-using TesteNetCore.Application.Commands.AcceptLead;
+using TesteNetCore.Application.Commands.ChangeStatus;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Application.Queries.GetLeads;
 using TesteNetCore.Domain.Repository;

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TesteNetCore.Application.Commands.AcceptLead;
+using TesteNetCore.Application.Commands.ChangeStatus;
 using TesteNetCore.Application.Queries.GetLeads;
 using TesteNetCore.Domain.Entities;
 
