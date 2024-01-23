@@ -9,9 +9,10 @@ namespace TesteNetCore.Application.Mapper.Profile
     {
         public ViewToEntity()
         {
-            CreateMap<Leads, GetLeadsViewModel>().ReverseMap();
-            CreateMap<Leads, GetAcceptedLeadsViewModel>().ReverseMap();
-            CreateMap<Leads, ChangeStatusLeadCommand>().ReverseMap();
+            CreateMap<Lead, ChangeStatusLeadCommand>().ReverseMap();
+            CreateMap<Lead, LeadIncompleteModel>().ReverseMap();
+            CreateMap<Lead, GetLeadsViewModel>().ReverseMap();
+            CreateMap<Lead, GetAcceptedLeadsViewModel>().ReverseMap(); 
         }
     }
 }

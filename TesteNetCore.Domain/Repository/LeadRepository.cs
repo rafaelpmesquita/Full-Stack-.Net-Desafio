@@ -12,20 +12,21 @@ using TesteNetCore.Domain.Repository.Interface;
 
 namespace TesteNetCore.Domain.Repository
 {
-    public class LeadRepository : BaseRepository<Leads>, ILeadRepository
+    public class LeadRepository : BaseRepository<Lead>, ILeadRepository
     {
         public LeadRepository(DbContext context) : base(context)
         {
         }
 
-        public async Task UpdateLead(Leads lead)
+        public async Task UpdateLead(Lead lead)
         {
             await UpdateAsync(lead);
         }
 
-        public async Task<List<Leads>> GetLeads()
+        public async Task<List<Lead>> GetLeads()
         {
-            return await GetQueryable().ToListAsync();
+            var a=  GetQueryable();
+            return await Task.FromResult(a.ToList());
              
         }
     }

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Reflection;
+using TesteNetCore.API.Service;
+using TesteNetCore.API.Service.Interface;
 using TesteNetCore.Application.Commands.ChangeStatus;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Application.Queries.GetLeads;
@@ -18,13 +20,10 @@ namespace TesteNetCore.API
     public class Startup
     {
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            CurrentEnvironment = env;
         }
-
-        private IWebHostEnvironment CurrentEnvironment { get; set; }
         private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -35,8 +34,9 @@ namespace TesteNetCore.API
             RegisterRepositories(services);
             services.AddScoped<DbContext, LeadDbContext>();
             services.AddScoped<ILeadRepository, LeadRepository>();
+            services.AddScoped<ILeadService, LeadService>();
             services.AddSingleton<IObjectConverter, ObjectConverter>();
-
+            services.AddCors();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ChangeStatusLeadHandler).Assembly));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetLeadsQueryHandler).Assembly));
@@ -68,11 +68,6 @@ namespace TesteNetCore.API
             {
                 endpoints.MapControllers();
             });
-        }
-
-        private bool EhAmbienteProducacao()
-        {
-            return CurrentEnvironment.EnvironmentName == "producao";
         }
 
 

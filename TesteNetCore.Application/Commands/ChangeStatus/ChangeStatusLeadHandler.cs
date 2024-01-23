@@ -10,11 +10,11 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
 {
     public class ChangeStatusLeadHandler : IRequestHandler<ChangeStatusLeadCommand, Unit>
     {
-        private readonly ILeadRepository _repository;
+        private readonly ILeadRepository _leadRepository;
         private readonly IObjectConverter _mapper;
-        public ChangeStatusLeadHandler(ILeadRepository repository, IObjectConverter mapper)
+        public ChangeStatusLeadHandler(ILeadRepository _eadRepository, IObjectConverter mapper)
         {
-            _repository = repository;
+            _leadRepository = _eadRepository;
             _mapper = mapper;
 
         }
@@ -22,7 +22,7 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
         {
             try
             {
-                Leads? lead = (await _repository.GetLeads()).FirstOrDefault(x => x.Id == request.Id);
+                Lead? lead = (await _leadRepository.GetLeads()).FirstOrDefault(x => x.Id == request.Id);
                 if (lead == null)
                 {
                     throw new InvalidOperationException("Lead not found.");
@@ -36,7 +36,7 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                     lead.Price = lead.Price > 500 ? lead.Price * (decimal)0.9 : 500;
                 }
                 lead.StatusLeadId = request.Status;
-                await _repository.UpdateLead(lead);
+                await _leadRepository.UpdateLead(lead);
                 return await Task.FromResult(Unit.Value);
             }
             catch (Exception e)
