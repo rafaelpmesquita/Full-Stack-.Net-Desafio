@@ -4,6 +4,7 @@ using TesteNetCore.Application.Mapper;
 using TesteNetCore.Application.Queries.GetLeads;
 using TesteNetCore.Domain.Entities;
 using TesteNetCore.Domain.Enum;
+using TesteNetCore.Domain.Exceptions;
 using TesteNetCore.Domain.Repository.Interface;
 
 namespace TesteNetCore.Application.Commands.ChangeStatus
@@ -25,11 +26,11 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                 Lead? lead = (await _leadRepository.GetLeads()).FirstOrDefault(x => x.Id == request.Id);
                 if (lead == null)
                 {
-                    throw new InvalidOperationException("Lead not found.");
+                    throw new CustomLeadException("Lead not found.", "Lead do not exist.");
                 }
                 if (lead.StatusLeadId != LeadStatus.Pending)
                 {
-                    throw new InvalidOperationException("Lead Status is not pending.");
+                    throw new CustomLeadException("No Pending Leads", "There are no leads with pending status.");
                 }
                 if (request.StatusLeadId == LeadStatus.Accepted)
                 {
@@ -39,9 +40,11 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                 await _leadRepository.UpdateLead(lead);
                 return await Task.FromResult(Unit.Value);
             }
-            catch (Exception e)
+            catch (CustomLeadException ex)
             {
-                throw e;
+                Console.WriteLine($"Exception Title: {ex.Title}");
+                Console.WriteLine($"Exception Custom Message: {ex.CustomMessage}");
+                throw;
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Domain.Enum;
+using TesteNetCore.Domain.Exceptions;
 using TesteNetCore.Domain.Repository.Interface;
 
 namespace TesteNetCore.Application.Queries.GetLeads
@@ -25,9 +26,11 @@ namespace TesteNetCore.Application.Queries.GetLeads
                     .ToList();
                 return await Task.FromResult(leads);
 
-            }catch(Exception e)
+            }catch(CustomLeadException ex)
             {
-                throw e;
+                Console.WriteLine($"Exception Title: {ex.Title}");
+                Console.WriteLine($"Exception Custom Message: {ex.CustomMessage}");
+                throw;
             }
         }
     }

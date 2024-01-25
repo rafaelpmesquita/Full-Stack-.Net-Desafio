@@ -5,6 +5,7 @@ using TesteNetCore.API.Service.Interface;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Domain.Entities;
 using TesteNetCore.Domain.Enum;
+using TesteNetCore.Domain.Exceptions;
 using TesteNetCore.Domain.Repository.Interface;
 
 namespace TesteNetCore.API.Service
@@ -29,9 +30,11 @@ namespace TesteNetCore.API.Service
                 return _objectConverter.Map<List<LeadIncompleteModel>>(pendingLeads);
 
             }
-            catch (Exception ex)
+            catch (CustomLeadException ex)
             {
-                throw ex;//dps adicionar msg titulo e ex
+                Console.WriteLine($"Exception Title: {ex.Title}");
+                Console.WriteLine($"Exception Custom Message: {ex.CustomMessage}");
+                throw;
             }
         }
         public async Task<List<Lead>> GetAcceptedLeads()
@@ -43,9 +46,11 @@ namespace TesteNetCore.API.Service
                         .ToList();
                 return pendingLeads;
             }
-            catch (Exception ex)
+            catch (CustomLeadException ex)
             {
-                throw ex;
+                Console.WriteLine($"Exception Title: {ex.Title}");
+                Console.WriteLine($"Exception Custom Message: {ex.CustomMessage}");
+                throw;
             }
         }
 
@@ -57,11 +62,11 @@ namespace TesteNetCore.API.Service
                     .FirstOrDefault(x => x.Id == request.Id);
                 if (lead == null)
                 {
-                    throw new InvalidOperationException("Lead not found.");
+                    throw new CustomLeadException("Lead not found.","Lead do not exist.");
                 }
                 if (lead.StatusLeadId != LeadStatus.Pending)
                 {
-                    throw new InvalidOperationException("Lead Status is not pending.");
+                    throw new CustomLeadException("No Pending Leads", "There are no leads with pending status.");
                 }
                 if (request.StatusLeadId == LeadStatus.Accepted)
                 {
@@ -70,9 +75,11 @@ namespace TesteNetCore.API.Service
                 lead.StatusLeadId = request.StatusLeadId;
                 return await _leadRepository.UpdateLead(lead);
             }
-            catch (Exception ex)
+            catch (CustomLeadException ex)
             {
-                throw ex;
+                Console.WriteLine($"Exception Title: {ex.Title}");
+                Console.WriteLine($"Exception Custom Message: {ex.CustomMessage}");
+                throw;
             }
         }
     }
