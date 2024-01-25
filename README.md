@@ -1,5 +1,63 @@
 # Full Stack .Net Desafio
+# Arquiteturas Diferentes na API
 
+A API foi desenvolvida utilizando duas abordagens distintas para atender a diferentes necessidades e cenários. Ela incorpora duas organizações principais: uma baseada em CQRS (Command Query Responsibility Segregation) e outra seguindo o padrão tradicional Controller-Service-Repository (CSR).
+
+## CQRS (Command Query Responsibility Segregation)
+
+A primeira organização adota o padrão CQRS, que separa as operações de leitura (queries) das operações de escrita (commands). Os endpoints CQRS têm a responsabilidade de lidar com comandos e consultas de forma distinta, permitindo uma escalabilidade e flexibilidade significativas.
+
+```csharp
+[HttpGet("cqrs")]
+public async Task<IActionResult> GetLeads()
+{
+    // Lida com a consulta para obter leads
+    GetLeadsQuery getLeads = new GetLeadsQuery();
+    return Ok(await _mediator.Send(getLeads));
+}
+
+[HttpGet("cqrs/accepted")]
+public async Task<IActionResult> GetAcceptedLeads()
+{
+    // Lida com a consulta para obter leads aceitos
+    GetAcceptedLeadsQuery getLeads = new GetAcceptedLeadsQuery();
+    return Ok(await _mediator.Send(getLeads));
+}
+
+[HttpPut("cqrs/changeStatus")]
+public async Task<IActionResult> ToAcceptLead([FromBody] ChangeStatusLeadCommand lead)
+{
+    // Lida com o comando para alterar o status de um lead
+    return Ok(await _mediator.Send(lead));
+}
+```
+
+## Controller-Service-Repository (CSR)
+
+A segunda organização segue o padrão Controller-Service-Repository (CSR), um modelo mais tradicional que separa as responsabilidades em camadas distintas. Essa abordagem é adotada para endpoints específicos, proporcionando uma alternativa estruturada.
+
+```csharp
+[HttpGet]
+public async Task<IActionResult> GetPendingLeadsCSR()
+{
+    // Lida com a consulta para obter leads pendentes utilizando o padrão CSR
+    return Ok(await _leadService.GetPendingLeads());
+}
+
+[HttpGet("accepted")]
+public async Task<IActionResult> GetAcceptedLeadsCSR()
+{
+    // Lida com a consulta para obter leads aceitos utilizando o padrão CSR
+    return Ok(await _leadService.GetAcceptedLeads());
+}
+
+[HttpPut("changeStatus")]
+public async Task<IActionResult> ToAcceptLeadCSR([FromBody] LeadIncompleteModel lead)
+{
+    // Lida com o comando para alterar o status de um lead utilizando o padrão CSR
+    return Ok(await _leadService.ChangeLeadStatus(lead));
+}
+```
 ## Tarefa
 
 O desafio consiste em criar uma interface de usuário para o gerenciamento de leads de uma empresa. O aplicativo deve ser desenvolvido como uma Single Page Application (SPA), utilizando uma estrutura JS moderna à sua escolha, suportada por uma API .Net Core e um banco de dados SQL Server.
