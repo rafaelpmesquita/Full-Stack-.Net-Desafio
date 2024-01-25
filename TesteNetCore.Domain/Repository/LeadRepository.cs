@@ -18,16 +18,16 @@ namespace TesteNetCore.Domain.Repository
         {
         }
 
-        public async Task UpdateLead(Lead lead)
+        public async Task<int> UpdateLead(Lead lead)
         {
-            await UpdateAsync(lead);
+            return (await UpdateAsync(lead)).Id;
         }
 
         public async Task<List<Lead>> GetLeads()
         {
-            var a=  GetQueryable();
-            return await Task.FromResult(a.ToList());
-             
+            var response = await GetQueryable().ToListAsync();
+            return await Task.FromResult((response));
+
         }
     }
 }

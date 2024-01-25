@@ -7,6 +7,6 @@ namespace TesteNetCore.API.Service.Interface
     {
         Task<List<LeadIncompleteModel>> GetPendingLeads();
         Task<List<Lead>> GetAcceptedLeads();
-        Task<Unit> ChangeLeadStatus(LeadIncompleteModel request);
+        Task<int> ChangeLeadStatus(LeadIncompleteModel request);
     }
 }

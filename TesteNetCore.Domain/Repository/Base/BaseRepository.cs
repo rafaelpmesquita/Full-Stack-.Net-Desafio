@@ -39,7 +39,7 @@ namespace TesteNetCore.Domain.Repository.Base
             await _context.SaveChangesAsync();
             return entity;
         }
-        public IQueryable<TEntity> GetQueryable()
+        public IQueryable<TEntity> GetQueryable()                   
         {
             return _context.Set<TEntity>().AsNoTracking();
         }

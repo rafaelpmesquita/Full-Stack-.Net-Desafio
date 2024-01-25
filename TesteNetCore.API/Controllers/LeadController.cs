@@ -47,19 +47,20 @@ namespace TesteNetCore.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPendingLeadsCSR()
         {
-            return Ok(_leadService.GetPendingLeads());
+            var a = await _leadService.GetPendingLeads();
+            return Ok(a);
         }
 
         [HttpGet("accepted")]
         public async Task<IActionResult> GetAcceptedLeadsCSR()
         {
-            return Ok(_leadService.GetAcceptedLeads());
+            return Ok(await _leadService.GetAcceptedLeads());
         }
          
-        [HttpGet("changeStatus")]
+        [HttpPut("changeStatus")]
         public async Task<IActionResult> ToAcceptLeadCSR([FromBody] LeadIncompleteModel lead)
         {
-            return Ok(_leadService.ChangeLeadStatus(lead));
+            return Ok(await _leadService.ChangeLeadStatus(lead));
         }
 
         #endregion

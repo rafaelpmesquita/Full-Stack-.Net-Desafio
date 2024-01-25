@@ -33,9 +33,9 @@ namespace TesteNetCore.API
             services.AddControllers();
             RegisterRepositories(services);
             services.AddScoped<DbContext, LeadDbContext>();
-            services.AddScoped<ILeadRepository, LeadRepository>();
-            services.AddScoped<ILeadService, LeadService>();
-            services.AddSingleton<IObjectConverter, ObjectConverter>();
+            services.AddTransient<ILeadRepository, LeadRepository>();
+            services.AddTransient<ILeadService, LeadService>();
+            services.AddTransient<IObjectConverter, ObjectConverter>();
             services.AddCors();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ChangeStatusLeadHandler).Assembly));
@@ -47,7 +47,7 @@ namespace TesteNetCore.API
             services.AddDbContext<LeadDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            }, ServiceLifetime.Scoped);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +57,7 @@ namespace TesteNetCore.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

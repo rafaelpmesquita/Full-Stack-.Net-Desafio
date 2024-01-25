@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TesteNetCore.Application.Mapper;
+using TesteNetCore.Domain.Enum;
 using TesteNetCore.Domain.Repository.Interface;
 
 namespace TesteNetCore.Application.Queries.GetLeads
@@ -24,7 +25,9 @@ namespace TesteNetCore.Application.Queries.GetLeads
         {
             try
             {
-                List<GetLeadsViewModel> leads = _mapper.Map<List<GetLeadsViewModel>>(await _repository.GetLeads());
+                List<GetLeadsViewModel> leads = _mapper.Map<List<GetLeadsViewModel>>
+                    (await _repository.GetLeads())
+                    .Where(x=>x.StatusLeadId==LeadStatus.Pending).ToList();
                 return await Task.FromResult(leads);
 
             }catch(Exception e)

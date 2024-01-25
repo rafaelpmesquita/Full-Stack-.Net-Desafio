@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.UnitTesting" Version="11.0.50727.1" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="NUnit" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\TesteNetCore.API\TesteNetCore.API.csproj" />
+    <ProjectReference Include="..\..\TesteNetCore.Application\TesteNetCore.Application.csproj" />
+    <ProjectReference Include="..\..\TesteNetCore.Domain\TesteNetCore.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

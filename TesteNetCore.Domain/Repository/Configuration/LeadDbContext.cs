@@ -18,9 +18,10 @@ namespace TesteNetCore.Domain.Repository.Configuration
         public DbSet<Lead> Leads { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Lead>()
-                .Property(e => e.StatusLeadId)
-                .HasConversion<int>();
+            //modelBuilder.Entity<Lead>()
+            //    .Property(e => e.StatusLeadId)
+            //    .HasConversion<int>();
+
         }
     }
 }

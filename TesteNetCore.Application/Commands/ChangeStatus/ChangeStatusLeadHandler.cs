@@ -31,11 +31,11 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                 {
                     throw new InvalidOperationException("Lead Status is not pending.");
                 }
-                if (request.Status == LeadStatus.Accepted)
+                if (request.StatusLeadId == LeadStatus.Accepted)
                 {
                     lead.Price = lead.Price > 500 ? lead.Price * (decimal)0.9 : 500;
                 }
-                lead.StatusLeadId = request.Status;
+                lead.StatusLeadId = request.StatusLeadId;
                 await _leadRepository.UpdateLead(lead);
                 return await Task.FromResult(Unit.Value);
             }

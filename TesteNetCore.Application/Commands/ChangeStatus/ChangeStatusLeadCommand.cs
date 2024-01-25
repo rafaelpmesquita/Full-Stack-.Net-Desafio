@@ -29,7 +29,7 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
         public string Description { get; set; }
         public double Price { get; set; }
         public int Id { get; set; }
-        public LeadStatus Status { get; set; }
+        public LeadStatus StatusLeadId { get; set; }
 
     }
 }

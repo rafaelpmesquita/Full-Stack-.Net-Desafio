@@ -36,8 +36,8 @@ namespace TesteNetCore.API.Service
         {
             try
             {
-                List<Lead> pendingLeads = (await _leadRepository.GetLeads()).ToList();
-                        //.Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Accepted).ToList();
+                List<Lead> pendingLeads = (await _leadRepository.GetLeads()).ToList()
+                        .Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Accepted).ToList();
                 return pendingLeads;
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace TesteNetCore.API.Service
             }
         }
 
-        public async Task<Unit> ChangeLeadStatus(LeadIncompleteModel request)
+        public async Task<int> ChangeLeadStatus(LeadIncompleteModel request)
         {
             try
             {
@@ -55,21 +55,20 @@ namespace TesteNetCore.API.Service
                 {
                     throw new InvalidOperationException("Lead not found.");
                 }
-                if (lead.StatusLeadId != LeadStatus.Pending)
+                if (lead.StatusLeadId != LeadStatus.Pending)    
                 {
                     throw new InvalidOperationException("Lead Status is not pending.");
                 }
                 if (request.StatusLeadId == LeadStatus.Accepted)
                 {
-                    lead.Price = lead.Price > 500 ? lead.Price * (decimal)0.9 : 500;
+                    lead.Price = lead.Price > 500 ? lead.Price * (decimal)0.9 : lead.Price;
                 }
                 lead.StatusLeadId = request.StatusLeadId;
-                await _leadRepository.UpdateLead(lead);
-                return await Task.FromResult(Unit.Value);
+                return await _leadRepository.UpdateLead(lead);
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

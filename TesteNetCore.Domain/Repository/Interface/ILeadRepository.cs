@@ -10,6 +10,6 @@ namespace TesteNetCore.Domain.Repository.Interface
     public interface ILeadRepository
     {
         Task<List<Lead>> GetLeads();
-        Task UpdateLead(Lead lead);
+        Task<int> UpdateLead(Lead lead);
     }
 }
