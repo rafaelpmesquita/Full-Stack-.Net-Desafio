@@ -17,12 +17,12 @@ namespace TesteNetCore.Tests
         public async Task GetPendingLeads_ShouldReturnPendingLeads()
         {
             // Arrange
-            var leadRepositoryMock = new Mock<ILeadRepository>();
-            var objectConverterMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> leadRepositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> objectConverterMock = new Mock<IObjectConverter>();
 
-            var leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
+            LeadService leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
 
-            var leads = new List<Lead>
+            List<Lead> leads = new List<Lead>
             {
                 new Lead { Id = 1, StatusLeadId = LeadStatus.Pending },
                 new Lead { Id = 2, StatusLeadId = LeadStatus.Accepted },
@@ -34,7 +34,7 @@ namespace TesteNetCore.Tests
                 .Returns((List<Lead> input) => input.Select(l => new LeadIncompleteModel { Id = l.Id }).ToList());
 
             // Act
-            var result = await leadService.GetPendingLeads();
+            List<LeadIncompleteModel> result = await leadService.GetPendingLeads();
 
             // Assert
             Assert.IsNotNull(result);
@@ -46,12 +46,12 @@ namespace TesteNetCore.Tests
         public async Task GetAcceptedLeads_ShouldReturnAcceptedLeads()
         {
             // Arrange
-            var leadRepositoryMock = new Mock<ILeadRepository>();
-            var objectConverterMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> leadRepositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> objectConverterMock = new Mock<IObjectConverter>();
 
-            var leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
+            LeadService leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
 
-            var leads = new List<Lead>
+            List<Lead> leads = new List<Lead>
             {
                 new Lead { Id = 1, StatusLeadId = LeadStatus.Pending },
                 new Lead { Id = 2, StatusLeadId = LeadStatus.Accepted },
@@ -61,7 +61,7 @@ namespace TesteNetCore.Tests
             leadRepositoryMock.Setup(repo => repo.GetLeads()).ReturnsAsync(leads);
 
             // Act
-            var result = await leadService.GetAcceptedLeads();
+            List<Lead> result = await leadService.GetAcceptedLeads();
 
             // Assert
             Assert.IsNotNull(result);
@@ -73,19 +73,19 @@ namespace TesteNetCore.Tests
         public async Task ChangeLeadStatus_ShouldUpdateLeadStatus()
         {
             // Arrange
-            var leadRepositoryMock = new Mock<ILeadRepository>();
-            var objectConverterMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> leadRepositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> objectConverterMock = new Mock<IObjectConverter>();
 
-            var leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
+            LeadService leadService = new LeadService(leadRepositoryMock.Object, objectConverterMock.Object);
 
-            var lead = new Lead
+            Lead lead = new Lead
             {
                 Id = 1,
                 StatusLeadId = LeadStatus.Pending,
                 Price = 600 
             };
 
-            var request = new LeadIncompleteModel
+            LeadIncompleteModel request = new LeadIncompleteModel
             {
                 Id = 1,
                 StatusLeadId = LeadStatus.Accepted

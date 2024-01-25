@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TesteNetCore.Domain.Entities;
-using TesteNetCore.Domain.Enum;
 
 namespace TesteNetCore.Domain.Repository.Configuration
 {
@@ -18,9 +12,9 @@ namespace TesteNetCore.Domain.Repository.Configuration
         public DbSet<Lead> Leads { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Lead>()
-            //    .Property(e => e.StatusLeadId)
-            //    .HasConversion<int>();
+            modelBuilder.Entity<Lead>()
+                .Property(e => e.StatusLeadId)
+                .HasConversion<int>();
 
         }
     }

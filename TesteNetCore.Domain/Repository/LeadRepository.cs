@@ -25,8 +25,7 @@ namespace TesteNetCore.Domain.Repository
 
         public async Task<List<Lead>> GetLeads()
         {
-            var response = await GetQueryable().ToListAsync();
-            return await Task.FromResult((response));
+            return await Task.FromResult((await GetQueryable().ToListAsync()));
 
         }
     }

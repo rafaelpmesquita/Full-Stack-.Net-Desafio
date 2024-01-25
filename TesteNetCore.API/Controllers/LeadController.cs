@@ -12,7 +12,8 @@ namespace TesteNetCore.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILeadService _leadService;
-        public LeadController(IMediator mediator, ILeadService leadService) {
+        public LeadController(IMediator mediator, ILeadService leadService)
+        {
             _mediator = mediator;
             _leadService = leadService;
         }
@@ -21,23 +22,20 @@ namespace TesteNetCore.API.Controllers
         [HttpGet("cqrs")]
         public async Task<IActionResult> GetLeads()
         {
-            var getLeads = new GetLeadsQuery();
-            var result = await _mediator.Send(getLeads);
-            return Ok(result);
+            GetLeadsQuery getLeads = new GetLeadsQuery();
+            return Ok(await _mediator.Send(getLeads));
         }
         [HttpGet("cqrs/accepted")]
         public async Task<IActionResult> GetAcceptedLeads()
         {
-            var getLeads = new GetAcceptedLeadsQuery();
-            var result = await _mediator.Send(getLeads);
-            return Ok(result);
+            GetAcceptedLeadsQuery getLeads = new GetAcceptedLeadsQuery();
+            return Ok(await _mediator.Send(getLeads));
         }
 
         [HttpPut("cqrs/changeStatus")]
         public async Task<IActionResult> ToAcceptLead([FromBody] ChangeStatusLeadCommand lead)
         {
-            var result = await _mediator.Send(lead);
-            return Ok(result);
+            return Ok(await _mediator.Send(lead));
         }
         #endregion
 
@@ -47,8 +45,7 @@ namespace TesteNetCore.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPendingLeadsCSR()
         {
-            var a = await _leadService.GetPendingLeads();
-            return Ok(a);
+            return Ok(await _leadService.GetPendingLeads());
         }
 
         [HttpGet("accepted")]
@@ -56,7 +53,7 @@ namespace TesteNetCore.API.Controllers
         {
             return Ok(await _leadService.GetAcceptedLeads());
         }
-         
+
         [HttpPut("changeStatus")]
         public async Task<IActionResult> ToAcceptLeadCSR([FromBody] LeadIncompleteModel lead)
         {
@@ -66,4 +63,3 @@ namespace TesteNetCore.API.Controllers
         #endregion
     }
 }
- 

@@ -41,7 +41,7 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
     }

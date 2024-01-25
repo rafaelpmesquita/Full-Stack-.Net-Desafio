@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using MediatR;
+using System.Data.Common;
 using TesteNetCore.API.Service.Interface;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Domain.Entities;
@@ -23,21 +24,23 @@ namespace TesteNetCore.API.Service
             try
             {
                 List<Lead> pendingLeads = (await _leadRepository.GetLeads())
-                        .Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Pending).ToList();
+                        .Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Pending)
+                        .ToList();
                 return _objectConverter.Map<List<LeadIncompleteModel>>(pendingLeads);
 
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;//dps adicionar msg titulo e ex
             }
         }
         public async Task<List<Lead>> GetAcceptedLeads()
         {
             try
             {
-                List<Lead> pendingLeads = (await _leadRepository.GetLeads()).ToList()
-                        .Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Accepted).ToList();
+                List<Lead> pendingLeads = (await _leadRepository.GetLeads())
+                        .Where(x => x.StatusLeadId == Domain.Enum.LeadStatus.Accepted)
+                        .ToList();
                 return pendingLeads;
             }
             catch (Exception ex)
@@ -50,12 +53,13 @@ namespace TesteNetCore.API.Service
         {
             try
             {
-                Lead? lead = (await _leadRepository.GetLeads()).FirstOrDefault(x => x.Id == request.Id);
+                Lead? lead = (await _leadRepository.GetLeads())
+                    .FirstOrDefault(x => x.Id == request.Id);
                 if (lead == null)
                 {
                     throw new InvalidOperationException("Lead not found.");
                 }
-                if (lead.StatusLeadId != LeadStatus.Pending)    
+                if (lead.StatusLeadId != LeadStatus.Pending)
                 {
                     throw new InvalidOperationException("Lead Status is not pending.");
                 }

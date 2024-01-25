@@ -25,14 +25,15 @@ namespace TesteNetCore.Application.Queries.GetLeads
         {
             try
             {
-                List<GetLeadsViewModel> leads = _mapper.Map<List<GetLeadsViewModel>>
-                    (await _repository.GetLeads())
-                    .Where(x=>x.StatusLeadId==LeadStatus.Pending).ToList();
+                List<GetLeadsViewModel> leads = _mapper
+                    .Map<List<GetLeadsViewModel>>(await _repository.GetLeads())
+                    .Where(x=>x.StatusLeadId==LeadStatus.Pending)
+                    .ToList();
                 return await Task.FromResult(leads);
 
             }catch(Exception e)
             {
-                throw;
+                throw e;
             }
         }
     }

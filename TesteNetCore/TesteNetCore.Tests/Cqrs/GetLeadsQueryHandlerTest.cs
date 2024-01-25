@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using Moq;
-using MediatR;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using TesteNetCore.Application.Queries.GetLeads;
 using TesteNetCore.Domain.Entities;
 using TesteNetCore.Domain.Enum;
@@ -20,14 +16,14 @@ namespace TesteNetCore.Tests.Handlers
         public async Task Handle_ReturnsPendingLeads()
         {
             // Arrange
-            var repositoryMock = new Mock<ILeadRepository>();
-            var mapperMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> repositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> mapperMock = new Mock<IObjectConverter>();
 
-            var handler = new GetLeadsQueryHandler(repositoryMock.Object, mapperMock.Object);
+            GetLeadsQueryHandler handler = new GetLeadsQueryHandler(repositoryMock.Object, mapperMock.Object);
 
-            var request = new GetLeadsQuery();
+            GetLeadsQuery request = new GetLeadsQuery();
 
-            var pendingLeads = new List<Lead>
+            List<Lead> pendingLeads = new List<Lead>
             {
                 new Lead { Id = 1, StatusLeadId = LeadStatus.Pending, },
                 new Lead { Id = 2, StatusLeadId = LeadStatus.Pending,  }
@@ -41,7 +37,7 @@ namespace TesteNetCore.Tests.Handlers
             });
 
             // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+            List<GetLeadsViewModel> result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);

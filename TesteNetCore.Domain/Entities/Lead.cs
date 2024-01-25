@@ -6,7 +6,17 @@ namespace TesteNetCore.Domain.Entities
     public class Lead
     {
         public Lead() { }
-        public Lead(string contactFirstName, DateTime dateCreated, string suburb, string category, string description, decimal price, string contactFullName, string contactPhoneNumber, string contactEmail, LeadStatus statusLeadId)
+        public Lead(
+            string contactFirstName,
+            DateTime dateCreated,
+            string suburb,
+            string category,
+            string description,
+            decimal price,
+            string contactFullName,
+            string contactPhoneNumber,
+            string contactEmail,
+            LeadStatus statusLeadId)
         {
             ContactFirstName = contactFirstName;
             DateCreated = dateCreated;
@@ -20,15 +30,15 @@ namespace TesteNetCore.Domain.Entities
             StatusLeadId = statusLeadId;
         }
         
-        public string ContactFullName { get; set; } 
-        public string ContactPhoneNumber { get; set; }
-        public string ContactEmail { get; set; }
+        public string ContactFullName { get; set; } = string.Empty;
+        public string ContactPhoneNumber { get; set; } = string.Empty;
+        public string ContactEmail { get; set; } = string.Empty;
         public int Id { get; set; }
-        public string ContactFirstName { get; set; }
+        public string ContactFirstName { get; set; } = string.Empty;
         public DateTime DateCreated { get; set; }
-        public string Suburb { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
+        public string Suburb { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public LeadStatus StatusLeadId { get; set; }
     }

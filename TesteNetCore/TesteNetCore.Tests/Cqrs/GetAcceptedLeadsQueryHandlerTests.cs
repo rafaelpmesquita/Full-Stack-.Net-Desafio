@@ -16,14 +16,14 @@ namespace TesteNetCore.Tests.Handlers
         public async Task Handle_ReturnsAcceptedLeads()
         {
             // Arrange
-            var repositoryMock = new Mock<ILeadRepository>();
-            var mapperMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> repositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> mapperMock = new Mock<IObjectConverter>();
 
-            var handler = new GetAcceptedLeadsQueryHandler(repositoryMock.Object, mapperMock.Object);
+            GetAcceptedLeadsQueryHandler handler = new GetAcceptedLeadsQueryHandler(repositoryMock.Object, mapperMock.Object);
 
-            var request = new GetAcceptedLeadsQuery();
+            GetAcceptedLeadsQuery request = new GetAcceptedLeadsQuery();
 
-            var acceptedLeads = new List<Lead>
+            List<Lead> acceptedLeads = new List<Lead>
             {
                 new Lead { Id = 1, StatusLeadId = LeadStatus.Accepted,},
                 new Lead { Id = 2, StatusLeadId = LeadStatus.Accepted,}
@@ -37,7 +37,7 @@ namespace TesteNetCore.Tests.Handlers
             });
 
             // Act
-            var result = await handler.Handle(request, CancellationToken.None);
+            List<GetAcceptedLeadsViewModel> result = await handler.Handle(request, CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);

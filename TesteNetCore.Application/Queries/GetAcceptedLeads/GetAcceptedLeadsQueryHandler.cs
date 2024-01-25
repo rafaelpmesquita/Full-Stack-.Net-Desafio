@@ -19,12 +19,15 @@ namespace TesteNetCore.Application.Queries.GetLeads
         {
             try
             {
-                List<GetAcceptedLeadsViewModel> leads = _mapper.Map<List<GetAcceptedLeadsViewModel>>(await _repository.GetLeads()).Where(x=>x.StatusLeadId == LeadStatus.Accepted).ToList();
+                List<GetAcceptedLeadsViewModel> leads = _mapper
+                    .Map<List<GetAcceptedLeadsViewModel>>(await _repository.GetLeads())
+                    .Where(x=>x.StatusLeadId == LeadStatus.Accepted)
+                    .ToList();
                 return await Task.FromResult(leads);
 
             }catch(Exception e)
             {
-                throw;
+                throw e;
             }
         }
     }

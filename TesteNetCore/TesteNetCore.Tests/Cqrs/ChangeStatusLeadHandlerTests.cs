@@ -16,15 +16,15 @@ namespace TesteNetCore.Tests.Cqrs
         public async Task Handle_ValidCommand_UpdatesLeadStatus()
         {
             // Arrange
-            var leadRepositoryMock = new Mock<ILeadRepository>();
-            var mapperMock = new Mock<IObjectConverter>();
+            Mock<ILeadRepository> leadRepositoryMock = new Mock<ILeadRepository>();
+            Mock<IObjectConverter> mapperMock = new Mock<IObjectConverter>();
 
-            var handler = new ChangeStatusLeadHandler(leadRepositoryMock.Object, mapperMock.Object);
+            ChangeStatusLeadHandler handler = new ChangeStatusLeadHandler(leadRepositoryMock.Object, mapperMock.Object);
 
-            var request = new ChangeStatusLeadCommand("John", DateTime.Now, "Suburb", "Category", "Description", 600, 1);
+            ChangeStatusLeadCommand request = new ChangeStatusLeadCommand("John", DateTime.Now, "Suburb", "Category", "Description", 600, 1);
 
-            var lead = new Lead
-            {
+            Lead lead = new Lead
+            {   
                 Id = 1,
                 ContactFirstName = "John",
                 DateCreated = DateTime.Now,

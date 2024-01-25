@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\GetDeclinedLeads\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TesteNetCore.Domain\TesteNetCore.Domain.csproj" />
   </ItemGroup>
 
