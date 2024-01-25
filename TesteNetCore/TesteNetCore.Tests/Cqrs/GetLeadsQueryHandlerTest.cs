@@ -5,8 +5,6 @@ using TesteNetCore.Domain.Entities;
 using TesteNetCore.Domain.Enum;
 using TesteNetCore.Domain.Repository.Interface;
 using TesteNetCore.Application.Mapper;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-
 namespace TesteNetCore.Tests.Handlers
 {
     [TestFixture]

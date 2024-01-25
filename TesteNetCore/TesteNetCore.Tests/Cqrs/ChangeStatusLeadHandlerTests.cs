@@ -1,6 +1,5 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using TesteNetCore.Application.Commands.ChangeStatus;
 using TesteNetCore.Application.Mapper;
 using TesteNetCore.Domain.Entities;
