@@ -43,6 +43,34 @@ A avaliação considera habilidades de codificação limpa, design, resolução 
 - Repositório GIT com a solução.
 - Instruções claras sobre como executar o aplicativo.
 
-## Submissão
+## Leads Table
 
-Disponibilize a solução em um repositório GIT e inclua instruções detalhadas. Boa sorte!
+The `Leads` table represents information about leads, including details about the contact, creation date, location, category, and status.
+
+| Column Name          | Data Type         | Constraints                   | Description                                              |
+|----------------------|-------------------|-------------------------------|----------------------------------------------------------|
+| Id                   | INT               | PRIMARY KEY, IDENTITY(1,1)    | Unique identifier for each lead                           |
+| ContactFirstName     | NVARCHAR(100)     | NOT NULL                      | First name of the contact person                          |
+| DateCreated          | DATETIME          | NOT NULL                      | Date and time when the lead was created                   |
+| Suburb               | NVARCHAR(100)     |                               | Suburb or location related to the lead                    |
+| Category             | NVARCHAR(50)      |                               | Category or type of the lead                              |
+| Description          | NVARCHAR(MAX)     |                               | Detailed description of the lead                         |
+| Price                | DECIMAL(18,2)     | NOT NULL                      | Price associated with the lead                            |
+| ContactFullName      | NVARCHAR(100)     |                               | Full name of the contact person                           |
+| ContactPhoneNumber   | NVARCHAR(20)      |                               | Phone number of the contact person                        |
+| ContactEmail         | NVARCHAR(100)     |                               | Email address of the contact person                       |
+| StatusLeadId         | INT               | FOREIGN KEY                   | References the `StatusLead` table, indicating the status of the lead (Accepted, Declined, Pending) |
+
+## StatusLead Table
+
+The `StatusLead` table represents the possible statuses that a lead can have.
+
+| Column Name | Data Type    | Constraints                   | Description                           |
+|-------------|--------------|-------------------------------|---------------------------------------|
+| Id          | INT          | PRIMARY KEY, IDENTITY(1,1)    | Unique identifier for each status     |
+| Descricao   | NVARCHAR(50) | NOT NULL                      | Description of the lead status        |
+
+## Sample Data
+
+Ten sample leads have been inserted into the `Leads` table to provide realistic data for testing and development purposes.
+
