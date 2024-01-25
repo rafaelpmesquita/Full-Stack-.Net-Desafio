@@ -5,7 +5,7 @@ A API foi desenvolvida utilizando duas abordagens distintas para atender a difer
 
 ## CQRS (Command Query Responsibility Segregation)
 
-A primeira organização adota o padrão CQRS, que separa as operações de leitura (queries) das operações de escrita (commands). Os endpoints CQRS têm a responsabilidade de lidar com comandos e consultas de forma distinta, permitindo uma escalabilidade e flexibilidade significativas.
+A primeira organização adota o padrão CQRS, que separa as operações de leitura (queries) das operações de escrita (commands). Os endpoints CQRS têm a responsabilidade de lidar com comandos e consultas de forma distinta, permitindo uma escalabilidade e flexibilidade significativas. Ele está SÍNCRONO, usando a mesma base para ler e escrever.
 
 ```csharp
 [HttpGet("cqrs")]
