@@ -35,6 +35,9 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                 if (request.StatusLeadId == LeadStatus.Accepted)
                 {
                     lead.Price = lead.Price > 500 ? lead.Price * (decimal)0.9 : 500;
+
+                    await SendNotificationEmail("vendas@test.com", lead);
+
                 }
                 lead.StatusLeadId = request.StatusLeadId;
                 await _leadRepository.UpdateLead(lead);
@@ -47,5 +50,34 @@ namespace TesteNetCore.Application.Commands.ChangeStatus
                 throw;
             }
         }
+
+
+        private async Task SendNotificationEmail(string emailAddress, Lead lead)
+        {
+            try
+            {
+                string emailContent = $"Subject: New Lead Accepted\n\n";
+                emailContent += $"Lead ID: {lead.Id}\n";
+                emailContent += $"Contact: {lead.ContactFullName}\n";
+                emailContent += $"Suburb: {lead.Suburb}\n";
+                emailContent += $"Category: {lead.Category}\n";
+                emailContent += $"Description: {lead.Description}\n";
+                emailContent += $"Price: {lead.Price:C}\n";
+                emailContent += $"Contact Email: {lead.ContactEmail}\n";
+
+                string fileName = $"LeadNotification_{DateTime.Now:yyyyMMdd_HHmmss}.txt";
+
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+                File.WriteAllText(filePath, emailContent);
+
+                Console.WriteLine($"Notification email saved to file: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving notification email to file: {ex.Message}");
+            }
+        }
+
     }
 }
